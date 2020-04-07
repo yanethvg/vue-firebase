@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'Registro'}" v-if="existeUsuario">Registro</router-link> |
-      <router-link :to="{ name: 'Inicio'}" v-if="!existeUsuario">Inicio</router-link> |
-      <router-link :to="{ name: 'Login'}" v-if="!existeUsuario">Ingreso</router-link> |
-      <a @click="cerrarSesion()" v-if="existeUsuario">Cerrar Sesión</a>
+  <div id="app" class="container mt-5">
+    <div id="nav" class="row" >
+      <router-link :to="{ name: 'Registro'}" v-if="!existeUsuario" class="btn btn-primary mx-2">Registro</router-link> |
+      <router-link :to="{ name: 'Inicio'}" v-if="existeUsuario" class="btn btn-primary mx-2">Inicio</router-link> |
+      <router-link :to="{ name: 'Login'}" v-if="!existeUsuario" class="btn btn-primary mx-2">Ingreso</router-link> |
+      <a @click="cerrarSesion()" v-if="existeUsuario" class="btn btn-danger mx-2">Cerrar Sesión</a>
     </div>
     <router-view/>
   </div>
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 <style>
-#app {
+/*#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -41,5 +41,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+}*/
 </style>

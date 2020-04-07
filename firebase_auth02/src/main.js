@@ -1,14 +1,20 @@
 import Vue from 'vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import App from './App.vue'
 import router from './router'
 import store from './store'
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 var firebase = require("firebase/app");
 
 //Add additional
 require("firebase/auth");
 //require("firebase/database");
-//require("firebase/firestore");
+require("firebase/firestore");
 
 var firebaseConfig = {
   apiKey: "AIzaSyBNbvYTCYct7B_722XB4scNCCvCAt1pZyE",
@@ -20,8 +26,12 @@ var firebaseConfig = {
   appId: "1:97313178049:web:51a18d7d01579592762f40",
   measurementId: "G-1YGCXQLXHW"
 };
+// Initialize Firebase esto era solo para el login
+//firebase.initializeApp(firebaseConfig);
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+export default firebaseApp.firestore();
 
 Vue.config.productionTip = false
 
