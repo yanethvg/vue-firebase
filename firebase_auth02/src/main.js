@@ -8,6 +8,9 @@ Vue.use(IconsPlugin)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
 
 var firebase = require("firebase/app");
 

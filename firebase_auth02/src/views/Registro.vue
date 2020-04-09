@@ -1,11 +1,17 @@
 <template>
     <div>
         <h1>Registro</h1>
-        <form @submit.prevent="crearUsuario({email: email, password: pass1})">
-            <input type="email" v-model="email">
-            <input type="current-password" v-model="pass1">
-            <input type="new-password" v-model="pass2">
-            <button type="submit" :disabled="!desactivar">Crear Usuario</button>
+        <form @submit.prevent="crearUsuario({email: email, password:password})">
+            <input type="email" v-model.lazy="$v.email.$model" placeholder="Ingresa un email" class="form-control my-3"
+            :class="{'is-invalid' : $v.email.$error}">
+            <p class="text-danger" v-if="!$v.email.email">Este email es incorrecto</p>
+            <p class="text-danger" v-if="!$v.email.required">Campo Requerido</p>
+            <input type="password" v-model.lazy="$v.password.$model" class="form-control my-3" placeholder="Ingrese su contraseña">
+            <p class="text-danger" v-if="!$v.password.required">La contraseña es obligatoria</p>
+            <p class="text-danger" v-if="!$v.password.minLength">Contraseña mayor de 6 Caracteres</p>
+            <input type="password"  v-model.lazy="$v.repeatPassword.$model" class="form-control my-3" placeholder="Ingrese nuevamente su contraseña">
+            <p class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">No coinciden las contraseñas</p>
+            <button type="submit" :disabled="!desactivar" class="btn btn-success">Crear Usuario</button>
         </form>
         <p>{{error}}</p>
     </div>
@@ -13,19 +19,34 @@
 
 <script>
 import { mapActions, mapState} from 'vuex'
+import { required, email,sameAs, minLength } from 'vuelidate/lib/validators'
+
 export default {
     name: 'Registro',
     data(){
         return{
             email:'',
-            pass1:'',
-            pass2: ''
+            password: '',
+            repeatPassword: ''
+        }
+    },
+    validations: {
+        email: {
+            required,
+            email
+        },
+         password: {
+            required,
+            minLength: minLength(6)
+        },
+            repeatPassword: {
+            sameAsPassword: sameAs('password')
         }
     },
     computed:{
         ...mapState(['error']),
         desactivar(){
-            return this.pass1 === this.pass2 && this.pass1 != ''
+            return this.password === this.repeatPassword && this.password != '' && this.email != ''
         }
     },
     methods :{
