@@ -9,7 +9,7 @@
             <input type="password" v-model.lazy="$v.pass.$model" placeholder="Ingrese su password" class="form-control my-3" :class="{'is-invalid' : $v.pass.$error}">
             <p class="text-danger" v-if="!$v.pass.minLength">Contraseña mayor de 6 Caracteres</p>
             <p class="text-danger" v-if="!$v.pass.required">Campo Requerido</p>
-            <button type="submit" class="btn btn-info">Acceder</button>
+            <button type="submit" class="btn btn-info" :disabled="$v.$invalid">Acceder</button>
         </form>
         {{error}}
     </div>

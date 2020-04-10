@@ -11,7 +11,7 @@
             <p class="text-danger" v-if="!$v.password.minLength">Contraseña mayor de 6 Caracteres</p>
             <input type="password"  v-model.lazy="$v.repeatPassword.$model" class="form-control my-3" placeholder="Ingrese nuevamente su contraseña">
             <p class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">No coinciden las contraseñas</p>
-            <button type="submit" :disabled="!desactivar" class="btn btn-success">Crear Usuario</button>
+            <button type="submit" class="btn btn-success" :disabled="$v.$invalid">Crear Usuario</button>
         </form>
         <p>{{error}}</p>
     </div>

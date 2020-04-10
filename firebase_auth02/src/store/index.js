@@ -11,7 +11,8 @@ export default new Vuex.Store({
     usuario: '',
     error: '',
     tareas: [],
-    tarea:{ nombre: '', id: ''}
+    tarea:{ nombre: '', id: ''},
+    carga: false
   },
   mutations: {
     setUsuario(state,payload){
@@ -31,6 +32,10 @@ export default new Vuex.Store({
       state.tareas = state.tareas.filter( doc => {
         return doc.id != id
       })
+    },
+    cargarFirebase(state,payload)
+    {
+      state.carga = payload
     }
   },
   actions: {
@@ -79,6 +84,9 @@ export default new Vuex.Store({
     },
     //acciones exclusivamente de crud de tareas
     getTareas({commit}){
+
+      //añadiendo el spinner de carga
+      commit('cargarFirebase',true);
       const tareas = []
       // poder sacar el usuario actual tiene el uid y el email
       const usuario = firebase.auth().currentUser;
@@ -89,11 +97,21 @@ export default new Vuex.Store({
             tarea.id = doc.id;
             tareas.push(tarea);
         });
+        /*Esto es de ejemplo
+        setTimeout(()=> {
+          //añadiendo el spinner de carga
+        commit('cargarFirebase',false);
+        },2000)*/
+        //añadiendo el spinner de carga
+        commit('cargarFirebase',false);
       });
+      
       //estamos mandando a la mutación de set tareas 
       commit('setTareas',tareas);
     },
     getTarea({commit},id){
+       //añadiendo el spinner de carga
+      commit('cargarFirebase',true);
       let tarea='';
       // poder sacar el usuario actual tiene el uid y el email
       const usuario = firebase.auth().currentUser;
@@ -103,8 +121,10 @@ export default new Vuex.Store({
             tarea = doc.data();
             tarea.id = doc.id;
             //aca adentro porque solo es un dato
+            commit('cargarFirebase',false);
             commit('setTarea',tarea)
           })
+         
     },
     editarTarea({commit},tarea){
       // poder sacar el usuario actual tiene el uid y el email
@@ -117,6 +137,8 @@ export default new Vuex.Store({
       })
     },
     agregarTarea ({commit},nombre){
+      //agregando la carga para evitar que el usuario envie datos doblemente
+      commit('cargarFirebase',true);
       // poder sacar el usuario actual tiene el uid y el email
       const usuario = firebase.auth().currentUser;
       db.collection(usuario.email).add({
@@ -125,6 +147,7 @@ export default new Vuex.Store({
       .then(doc => {
         console.log(doc.id);
         router.push({name: 'Inicio'})
+        commit('cargarFirebase',false);
       })
     },
     eliminarTarea({commit,dispatch},id){
