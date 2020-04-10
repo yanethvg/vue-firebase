@@ -9,9 +9,12 @@
       <h3>Cargando contenido ...</h3>
       <pulse-loader :loading="carga" ></pulse-loader>
     </div>
+    <form @submit.prevent="buscador(busqueda)">
+      <input type="text" placeholder="Buscar Tarea" class="form-control mt-5" v-model="busqueda" v-on:keyup="buscador(busqueda)">
+    </form>
     <ul class="list-group mt-5" v-if="!carga"> 
       <li class="list-group-item" 
-      v-for="item of tareas" :key="item.id">
+      v-for="item of arrayFiltrado" :key="item.id">
         {{item.id}} - {{item.nombre}}
         <div class="float-right">
           <router-link class="btn btn-warning btn-sm mr-2" 
@@ -27,19 +30,25 @@
 </template>
 
 <script>
-import { mapState,mapActions } from 'vuex'
+import { mapState,mapActions,mapGetters } from 'vuex'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
     name: 'Inicio',
+    data(){
+      return{
+        busqueda: ''
+      }
+    },
     components: {
       PulseLoader
     },
     computed: {
-        ...mapState(['usuario','tareas','carga'])
+        ...mapState(['usuario','tareas','carga']),
+        ...mapGetters(['arrayFiltrado'])
     },
     methods: {
-        ...mapActions(['getTareas','eliminarTarea'])
+        ...mapActions(['getTareas','eliminarTarea','buscador'])
     },
     created(){
         this.getTareas();
