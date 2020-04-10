@@ -52,11 +52,11 @@ export default new Vuex.Store({
           .then(() => {
             //redireccionar
             router.push({name: 'Inicio'});
-          });
+          })
 
       }).catch(err => {
-        console.log(err.message);
-        commit('setError',err.message);
+        console.log(err.code);
+        commit('setError',err.code);
       })
     },
     ingresoUsuario({commit},payload){
@@ -66,8 +66,10 @@ export default new Vuex.Store({
         commit('setUsuario',{email: res.user.email, uid: res.user.uid});
         router.push({name: 'Inicio'});
       }).catch(err => {
-        console.log(err.message);
-        commit('setError',err.message);
+       console.log(err.code);
+        //commit('setError',err.message);
+        //se le puede pasar el codigo
+        commit('setError',err.code);
       })
     },
     detectarUsuario({commit},payload){

@@ -13,7 +13,9 @@
             <p class="text-danger" v-if="!$v.repeatPassword.sameAsPassword">No coinciden las contraseñas</p>
             <button type="submit" class="btn btn-success" :disabled="$v.$invalid">Crear Usuario</button>
         </form>
-        <p>{{error}}</p>
+         <p v-if="error === 'auth/email-already-in-use'">
+            Email ya Registrado
+        </p>
     </div>
 </template>
 

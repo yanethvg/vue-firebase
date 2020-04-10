@@ -11,7 +11,12 @@
             <p class="text-danger" v-if="!$v.pass.required">Campo Requerido</p>
             <button type="submit" class="btn btn-info" :disabled="$v.$invalid">Acceder</button>
         </form>
-        {{error}}
+        <p v-if="error === 'auth/user-not-found'">
+            Usuario incorrecto
+        </p>
+        <p v-if="error === 'auth/wrong-password'">
+            Contraseña Incorrecta
+        </p>
     </div>
 </template>
 
