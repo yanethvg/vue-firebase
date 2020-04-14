@@ -11,10 +11,6 @@ Vue.config.productionTip = false
 
 auth.onAuthStateChanged(function(user) {
   if (user) {
-     const displayName = user.displayName;
-     const email = user.email;
-     const uid = user.uid;
-     const foto = user.foto;
      store.dispatch('setUsuario',user);
   }
   new Vue({

@@ -1,19 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-          <v-btn  to="/">VUE</v-btn>
-      
-      <v-spacer></v-spacer>
-      <v-btn @click="cerrarSesion">
-        <span class="mr-2" >Cerrar sesión</span>
-        <v-icon>fas fa-times-circle</v-icon>
-      </v-btn>
-    </v-app-bar>
-
+    <Navbar v-if="usuario != ''"></Navbar>
     <v-content>
       <v-container>
         <router-view></router-view>
@@ -23,18 +10,17 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+
+import Navbar from '@/components/Navbar';
+import { mapState } from 'vuex';
 export default {
   name: 'App',
-
   components: {
+    Navbar
   },
-
-  data: () => ({
-    //
-  }),
-  methods:{
-    ...mapActions(['cerrarSesion']) 
+  computed:{
+    ...mapState(['usuario'])
   }
+ 
 };
 </script>

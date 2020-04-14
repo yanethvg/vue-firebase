@@ -17,6 +17,12 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "ingreso" */ '../views/Ingreso.vue'),
     
   },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import(/* webpackChunkName: "ingreso" */ '../views/Admin.vue'),
+    meta: {requiresAuth: true}
+  },
 ]
 
 const router = new VueRouter({
